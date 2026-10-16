@@ -17,7 +17,7 @@ services:
     # Bound to loopback: the database is only reachable from the host itself,
     # never from the public internet. Compose talks to it over the project network.
     ports:
-      - "127.0.0.1:${POSTGRES_HOST_PORT:-5433}:5432"
+      - "127.0.0.1:${POSTGRES_HOST_PORT:-5434}:5432"
     # The only state a deploy must never destroy.
     volumes:
       - db_data:/var/lib/postgresql/data

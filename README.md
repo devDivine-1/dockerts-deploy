@@ -1,4 +1,4 @@
-# biodata
+# biodataforms
 
 A small full-stack app for capturing and listing **biodata records** (name, contact,
 date of birth, sex, height/weight, blood type, notes). It is deliberately built as
@@ -10,7 +10,7 @@ three separable pieces so the whole thing runs with one `docker compose up`:
 - **`frontend/`** — Next.js 15 App Router UI (TypeScript strict, Tailwind CSS v4).
   The browser **never** talks to the Python service directly; the Next app proxies
   through its own route handlers under `/api/*`.
-- **`db`** — Postgres 16, one named volume, published on host port **5433** so it
+- **`db`** — Postgres 16, one named volume, published on host port **5434** so it
   does not collide with a Postgres you may already run locally.
 
 The one behaviour worth calling out up front: **creating a record is replay-safe**.
@@ -35,7 +35,7 @@ flowchart LR
         MIG["Alembic migrations<br/>(run at startup)"]
     end
 
-    subgraph dbc["db container :5432 → host 5433"]
+    subgraph dbc["db container :5432 → host 5434"]
         PG[("Postgres 16<br/>bio_records")]
     end
 
@@ -69,7 +69,7 @@ Then:
 | UI                | http://localhost:3000                   |
 | API health        | http://localhost:8000/health            |
 | API records       | http://localhost:8000/api/v1/bio-records|
-| Postgres          | `localhost:5433` (user/pass `biodata`)  |
+| Postgres          | `localhost:5434` (user/pass `biodata`)  |
 
 Useful targets:
 
@@ -94,14 +94,14 @@ sh -c "uv run alembic upgrade head && uv run python -m biodata"
 Start just Postgres, then run each service on the host:
 
 ```bash
-docker compose up -d db          # Postgres on localhost:5433
+docker compose up -d db          # Postgres on localhost:5434
 ```
 
 **Backend** (cwd `backend/`, needs [uv](https://docs.astral.sh/uv/)):
 
 ```bash
 uv sync --frozen
-export DATABASE_URL=postgresql+psycopg://biodata:biodata@localhost:5433/biodata
+export DATABASE_URL=postgresql+psycopg://biodata:biodata@localhost:5434/biodata
 uv run alembic upgrade head
 uv run uvicorn biodata.app:app --reload --port 8000
 ```
@@ -136,8 +136,8 @@ and falls back to the defaults shown below.
 | `POSTGRES_USER`      | db        | `biodata`                                                    | |
 | `POSTGRES_PASSWORD`  | db        | `biodata`                                                    | change for anything non-local |
 | `POSTGRES_DB`        | db        | `biodata`                                                    | |
-| `POSTGRES_HOST_PORT` | db        | `5433`                                                       | host port mapped to container `5432` |
-| `DATABASE_URL`       | backend   | `postgresql+psycopg://biodata:biodata@db:5432/biodata`       | SQLAlchemy URL; use `localhost:5433` off-compose |
+| `POSTGRES_HOST_PORT` | db        | `5434`                                                       | host port mapped to container `5432`; change if occupied |
+| `DATABASE_URL`       | backend   | `postgresql+psycopg://biodata:biodata@db:5432/biodata`       | SQLAlchemy URL; use `localhost:5434` off-compose |
 | `CORS_ORIGINS`       | backend   | `http://localhost:3000`                                      | comma separated |
 | `LOG_LEVEL`          | backend   | `INFO`                                                       | |
 | `BACKEND_HOST_PORT`  | backend   | `8000`                                                       | |

@@ -158,7 +158,7 @@ jobs:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_HOST_PORT: "5433"
           BACKEND_HOST_PORT: "8000"
-          FRONTEND_HOST_PORT: "3000"
+          FRONTEND_HOST_PORT: "3001"
           CORS_ORIGINS: ${{ vars.CORS_ORIGINS }}
           LOG_LEVEL: INFO
 

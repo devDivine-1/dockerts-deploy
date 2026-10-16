@@ -18,7 +18,7 @@ frontend/Dockerfile       (devops agent owns — frontend agent does NOT write i
 
 | service  | container port | host port |
 |----------|----------------|-----------|
-| postgres | 5432           | 5433      |
+| postgres | 5432           | 5434      |
 | backend  | 8000           | 8000      |
 | frontend | 3000           | 3000      |
 

@@ -24,7 +24,7 @@ tests/            pytest suite
 
 | variable       | default                                                      |
 |----------------|--------------------------------------------------------------|
-| `DATABASE_URL` | `postgresql+psycopg://biodata:biodata@localhost:5433/biodata` |
+| `DATABASE_URL` | `postgresql+psycopg://biodata:biodata@localhost:5434/biodata` |
 | `CORS_ORIGINS` | `http://localhost:3000` (comma separated)                     |
 | `LOG_LEVEL`    | `INFO`                                                        |
 
